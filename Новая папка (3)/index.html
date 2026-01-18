@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PasswordSafe - Генератор паролей</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="dark-theme">
+    <div class="container">
+        <header class="header">
+            <div class="header-left">
+                <h1>PasswordSafe</h1>
+                <p class="subtitle">Генератор безопасных паролей</p>
+            </div>
+            <div class="header-right">
+                <button class="btn-icon" id="themeToggle" title="Сменить тему">
+                    <span class="theme-icon">🌙</span>
+                </button>
+                <button class="btn-icon" id="faqBtn" title="Помощь">?</button>
+            </div>
+        </header>
+
+        <main class="main-content">
+            <!-- Секция с паролем -->
+            <section class="card">
+                <h2 class="card-title">
+                    <span>🔒</span> Сгенерированный пароль
+                </h2>
+                
+                <div class="password-display">
+                    <input type="text" id="passwordOutput" class="password-input" readonly>
+                    <div class="password-buttons">
+                        <button class="btn btn-secondary" id="copyBtn">Копировать</button>
+                        <button class="btn" id="refreshBtn">Обновить</button>
+                    </div>
+                </div>
+                
+                <div class="strength-meter">
+                    <div class="strength-label">
+                        <span>Надежность:</span>
+                        <span id="strengthValue">0%</span>
+                    </div>
+                    <div class="strength-bar">
+                        <div class="strength-fill" id="strengthFill"></div>
+                    </div>
+                    <div class="strength-text" id="strengthText">Оцените пароль</div>
+                </div>
+            </section>
+
+            <!-- Настройки генерации -->
+            <section class="card">
+                <h2 class="card-title">
+                    <span>⚙️</span> Настройки
+                </h2>
+                
+                <div class="settings-grid">
+                    <div class="checkbox-group">
+                        <input type="checkbox" id="includeUppercase" checked>
+                        <label for="includeUppercase">Заглавные буквы (A-Z)</label>
+                    </div>
+                    
+                    <div class="checkbox-group">
+                        <input type="checkbox" id="includeLowercase" checked>
+                        <label for="includeLowercase">Строчные буквы (a-z)</label>
+                    </div>
+                    
+                    <div class="checkbox-group">
+                        <input type="checkbox" id="includeNumbers" checked>
+                        <label for="includeNumbers">Цифры (0-9)</label>
+                    </div>
+                    
+                    <div class="checkbox-group">
+                        <input type="checkbox" id="includeSymbols">
+                        <label for="includeSymbols">Спецсимволы (!@#$)</label>
+                    </div>
+                </div>
+                
+                <div class="length-control">
+                    <div class="length-label">
+                        <span>Длина пароля:</span>
+                        <span class="length-value" id="lengthValue">12</span>
+                    </div>
+                    <input type="range" min="6" max="32" value="12" class="range-slider" id="lengthSlider">
+                    <div class="range-labels">
+                        <span>6</span>
+                        <span>32</span>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Проверка пароля -->
+            <section class="card">
+                <h2 class="card-title">
+                    <span>🔍</span> Проверить пароль
+                </h2>
+                
+                <div class="check-section">
+                    <div class="input-group">
+                        <input type="text" id="checkPasswordInput" class="text-input" placeholder="Введите пароль для проверки">
+                        <button class="btn" id="checkPasswordBtn">Проверить</button>
+                    </div>
+                    
+                    <div class="check-results" id="checkResults">
+                        <div class="result-header" id="resultStrength">Результат проверки</div>
+                        <div class="result-list" id="resultDetails">
+                            <!-- Результаты появятся здесь -->
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Основная кнопка -->
+            <button class="btn btn-primary btn-large" id="generateBtn">
+                Сгенерировать новый пароль
+            </button>
+
+            <!-- Советы -->
+            <section class="card tips">
+                <h2 class="card-title">
+                    <span>💡</span> Советы по безопасности
+                </h2>
+                
+                <div class="tips-grid">
+                    <div class="tip">
+                        <h3>Длина пароля</h3>
+                        <p>Используйте пароли длиной не менее 12 символов.</p>
+                    </div>
+                    
+                    <div class="tip">
+                        <h3>Разнообразие</h3>
+                        <p>Сочетайте буквы разного регистра, цифры и символы.</p>
+                    </div>
+                    
+                    <div class="tip">
+                        <h3>Уникальность</h3>
+                        <p>Не используйте один пароль для разных сервисов.</p>
+                    </div>
+                    
+                    <div class="tip">
+                        <h3>Регулярность</h3>
+                        <p>Меняйте пароли каждые 3-6 месяцев.</p>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- Модальное окно FAQ -->
+    <div class="modal" id="faqModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Частые вопросы</h2>
+                <button class="btn-close" id="closeModal">&times;</button>
+            </div>
+            
+            <div class="faq-list">
+                <div class="faq-item">
+                    <div class="faq-question">
+                        Как работает генератор?
+                        <span class="faq-arrow">▼</span>
+                    </div>
+                    <div class="faq-answer">
+                        Используется криптографически безопасный алгоритм. Пароли генерируются локально.
+                    </div>
+                </div>
+                
+                <div class="faq-item">
+                    <div class="faq-question">
+                        Как оценивается надежность?
+                        <span class="faq-arrow">▼</span>
+                    </div>
+                    <div class="faq-answer">
+                        Оценивается длина, разнообразие символов, наличие последовательностей.
+                    </div>
+                </div>
+                
+                <div class="faq-item">
+                    <div class="faq-question">
+                        Почему разные пароли?
+                        <span class="faq-arrow">▼</span>
+                    </div>
+                    <div class="faq-answer">
+                        Чтобы при утечке одного пароля другие аккаунты оставались в безопасности.
+                    </div>
+                </div>
+                
+                <div class="faq-item">
+                    <div class="faq-question">
+                        Как часто менять пароли?
+                        <span class="faq-arrow">▼</span>
+                    </div>
+                    <div class="faq-answer">
+                        Каждые 3-6 месяцев для важных аккаунтов.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
